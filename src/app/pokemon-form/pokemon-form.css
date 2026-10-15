@@ -1,114 +1,192 @@
-/* General page styling */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f4f7fb;
-  color: #333;
+/* ===== POKEDEX THEME ===== */
+:host {
+    display: block;
+    min-height: 100vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+
+    background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_j9k2Q0kqw_p2MxP15wKnI4eTIxF3s4FLqISIdEkrXwZkn6C-i5PHO2NZe-ZpFVfIilIeNoq4ztWqRtzYe4vlXXR2hhZLZmP_Z_dfighyMJQ4AH44p5-wEfi9o4353vszUZofDXYjeLah/s1600/pokeball-pc-hd.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-/* Pokémon section */
-.pokemon-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
+/* ===== POKEBALL FORM CARD ===== */
+form {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 470px;
+  margin: 0 auto 40px;
+  padding: 125px 28px 28px;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #e9273c 0 88px, #ffffff 88px 100%);
+  border: 2px solid black;
+  border-radius: 24px;
+  box-shadow: 0 12px 28px rgba(32, 59, 92, 0.14);
 }
 
-/* Individual Pokémon cards */
-.pokemon-card {
-  width: 250px;
-  padding: 20px;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+/* Black divider beneath the red Pokeball top */
+form::before {
+  content: "";
+  position: absolute;
+  top: 82px;
+  left: 0;
+  width: 100%;
+  height: 9px;
+  background: #20344c;
 }
 
-.pokemon-card:hover {
-  transform: translateY(-5px);
+/* Pokeball center button */
+form::after {
+  content: "";
+  position: absolute;
+  top: 56px;
+  left: 50%;
+  width: 48px;
+  height: 48px;
+  transform: translateX(-50%);
+  border: 7px solid #20344c;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0 8px, #20344c 9px 12px, #ffffff 13px);
+  box-shadow: 0 0 0 3px #ffffff;
 }
 
-/* Pokémon images */
-.pokemon-card img {
-  width: 150px;
-  height: 150px;
-  object-fit: contain;
+/* ===== FORM FIELDS ===== */
+form div {
+  position: relative;
+  margin-bottom: 19px;
 }
 
-/* Headings */
-h1,
-h2,
-h3 {
-  text-align: center;
-  color: #2455a4;
-}
-
-/* Navigation bar */
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  padding: 15px;
-  background-color: #2455a4;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
   font-weight: bold;
+  color: #203b5c;
 }
 
-nav a:hover {
-  color: #ffcb05;
+input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 13px 14px;
+  border: 1.5px solid #c7d8ef;
+  border-radius: 9px;
+  outline: none;
+  background: #ffffff;
+  color: #203b5c;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* Buttons */
+input::placeholder {
+  color: #8ca1bc;
+}
+
+input:focus {
+  border-color: #3787d8;
+  box-shadow: 0 0 0 3px rgba(55, 135, 216, 0.12);
+}
+
+/* ===== VALIDATION MESSAGES ===== */
+.error {
+  margin: 6px 0 0;
+  color: #e32636;
+  font-size: 13px;
+}
+
+/* ===== SAVE POKEMON BUTTON ===== */
 button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: #3478d4;
-  color: white;
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #c91e30;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f12d42, #d91f34);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 14px;
+  transition: transform 0.2s, background 0.2s;
 }
 
-button:hover {
-  background-color: #1d4f99;
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #d91f34, #b81729);
 }
 
-/* PokéMart product cards */
-.product-card {
-  width: 220px;
-  padding: 20px;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+button:disabled {
+  border-color: #aabbd2;
+  background: #aabbd2;
+  cursor: not-allowed;
+}
+
+/* ===== SAVED POKEMON HEADING ===== */
+h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  max-width: 700px;
+  margin: 30px auto 22px;
+  color: #203b5c;
+  font-size: 25px;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Cart and general content */
-.container {
-  max-width: 1100px;
-  margin: 20px auto;
+h2::before,
+h2::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: #ed3044;
+}
+
+/* ===== POKEMON LIST ===== */
+ul {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  box-sizing: border-box;
+  margin-bottom: 14px;
   padding: 20px;
+  border: 1px solid #cbd9eb;
+  border-left: 7px solid #e9273c;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 5px 12px rgba(32, 59, 92, 0.07);
+  line-height: 1.8;
 }
 
-/* Responsive layout for mobile */
+li strong {
+  color: #d9273b;
+  font-size: 18px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 600px) {
-  .pokemon-card,
-  .product-card {
-    width: 100%;
-    max-width: 300px;
+  :host {
+    padding: 20px 12px 35px;
   }
 
-  nav {
-    flex-wrap: wrap;
-    gap: 15px;
+  form {
+    padding: 115px 20px 24px;
+    border-radius: 18px;
+  }
+
+  h2 {
+    gap: 8px;
+    font-size: 21px;
+  }
+
+  li {
+    padding: 15px;
   }
 }
