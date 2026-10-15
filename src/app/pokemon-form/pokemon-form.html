@@ -1,3 +1,4 @@
+
 <form [formGroup]="pokemonForm" (ngSubmit)="onSubmit()">
   <div>
     <label for="name">Name</label>
@@ -31,16 +32,25 @@
     }
   </div>
 
-  <button type="submit" [disabled]="pokemonForm.invalid">Save Pokémon</button>
+  <button type="submit" [disabled]="pokemonForm.invalid">
+    Save Pokémon
+  </button>
 </form>
 
 <h2>Saved Pokémon</h2>
 
 <ul>
-  @for (pokemon of pokemonService.pokemonList(); track pokemon.id) {
+  @for (pokemon of pokemonService.pokemonList(); track pokemon._id) {
     <li>
       <strong>{{ pokemon.name }}</strong>
       (Type: {{ pokemon.type }}, Level: {{ pokemon.level }}, Nature: {{ pokemon.nature }})
+
+      <button
+        type="button"
+        class="delete-button"
+        (click)="deletePokemon(pokemon._id)">
+        Delete
+      </button>
     </li>
   } @empty {
     <li>No Pokémon saved yet.</li>

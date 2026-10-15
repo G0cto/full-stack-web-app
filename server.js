@@ -31,7 +31,7 @@ app.get('/api/pokemon', async (req, res) => {
     const list = await Pokemon.find();
     res.send(list);
 });
-app.put('api/pokemon/:id', async (req, res) => {
+app.put('/api/pokemon/:id', async (req, res) => {
     const pokemon = await Pokemon.findByIdAndUpdate(
         req.params.id,
         req.body,
@@ -43,7 +43,7 @@ app.put('api/pokemon/:id', async (req, res) => {
     }
     res.send(pokemon);
 });
-app.delete('api/pokemon/:id', async (req, res) => {
+app.delete('/api/pokemon/:id', async (req, res) => {
     const pokemon = await Pokemon.findByIdAndDelete(req.params.id);
     if (!pokemon) {
         return res.status(404).send({ message: 'Pokemon not found' });

@@ -1,3 +1,4 @@
+
 import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Pokemon } from '../pokemon';
@@ -23,23 +24,37 @@ export class PokemonForm implements OnInit {
   });
 
   ngOnInit() {
-    // Initial fetch function to show data when the component loads
     this.pokemonService.fetchPokemon();
   }
 
   onSubmit() {
-    if (this.pokemonForm.invalid) return;
+    if (this.pokemonForm.invalid) {
+      return;
+    }
 
     const data = this.pokemonForm.getRawValue();
 
-    if (this.pokemonForm.valid) {
-      this.pokemonService.savePokemon(data).subscribe({
-        next: () => {
-          this.pokemonService.fetchPokemon();
-          this.pokemonForm.reset();
-          console.log('Pokemon saved successful');
-        }
-      });
-    }
+    this.pokemonService.savePokemon(data).subscribe({
+      next: () => {
+        this.pokemonService.fetchPokemon();
+        this.pokemonForm.reset();
+        console.log('Pokemon saved successfully');
+      },
+      error: (error) => {
+        console.error('Failed to save Pokemon:', error);
+      }
+    });
+  }
+
+  deletePokemon(id: string) {
+    this.pokemonService.deletePokemon(id).subscribe({
+      next: () => {
+        this.pokemonService.fetchPokemon();
+        console.log('Pokemon deleted successfully');
+      },
+      error: (error) => {
+        console.error('Failed to delete Pokemon:', error);
+      }
+    });
   }
 }
