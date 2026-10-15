@@ -22,4 +22,14 @@ export class Pokemon {
     savePokemon(data: any) {
         return this.http.post(this.apiUrl, data);
     }
+
+    //update pokemon on the database
+    updatePokemon(id: string, data: any) {
+        return this.http.put(`${this.apiUrl}/${id}`, data);
+    }
+
+    //delete pokemon from the database
+    deletePokemon(id: string) {
+        return this.http.delete(`${this.apiUrl}/${id}`);
+    }
 }
