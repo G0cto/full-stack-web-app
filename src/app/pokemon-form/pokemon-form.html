@@ -1,58 +1,78 @@
 
-<form [formGroup]="pokemonForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="name">Name</label>
-    <input id="name" type="text" formControlName="name" />
-    @if (pokemonForm.controls.name.touched && pokemonForm.controls.name.hasError('required')) {
-      <p class="error" role="alert">Name is required.</p>
-    }
-  </div>
+<div class="pokemon-page">
 
-  <div>
-    <label for="type">Type</label>
-    <input id="type" type="text" formControlName="type" />
-    @if (pokemonForm.controls.type.touched && pokemonForm.controls.type.hasError('required')) {
-      <p class="error" role="alert">Type is required.</p>
-    }
-  </div>
+  <form
+    class="pokemon-form"
+    [formGroup]="pokemonForm"
+    (ngSubmit)="savePokemon()">
 
-  <div>
-    <label for="level">Level</label>
-    <input id="level" type="number" min="1" formControlName="level" />
-    @if (pokemonForm.controls.level.touched && pokemonForm.controls.level.invalid) {
-      <p class="error" role="alert">Level is required and must be at least 1.</p>
-    }
-  </div>
+    <div class="form-header">
+      <div class="pokeball">◎</div>
+    </div>
 
-  <div>
-    <label for="nature">Nature</label>
-    <input id="nature" type="text" formControlName="nature" />
-    @if (pokemonForm.controls.nature.touched && pokemonForm.controls.nature.hasError('required')) {
-      <p class="error" role="alert">Nature is required.</p>
-    }
-  </div>
+    <div class="form-body">
+      <label for="name">Name</label>
+      <input id="name" type="text" formControlName="name">
 
-  <button type="submit" [disabled]="pokemonForm.invalid">
-    Save Pokémon
-  </button>
-</form>
+      <label for="type">Type</label>
+      <input id="type" type="text" formControlName="type">
 
-<h2>Saved Pokémon</h2>
+      <label for="level">Level</label>
+      <input id="level" type="number" formControlName="level">
 
-<ul>
-  @for (pokemon of pokemonService.pokemonList(); track pokemon._id) {
-    <li>
-      <strong>{{ pokemon.name }}</strong>
-      (Type: {{ pokemon.type }}, Level: {{ pokemon.level }}, Nature: {{ pokemon.nature }})
+      <label for="nature">Nature</label>
+      <input id="nature" type="text" formControlName="nature">
 
-      <button
-        type="button"
-        class="delete-button"
-        (click)="deletePokemon(pokemon._id)">
-        Delete
+      <button class="save-button" type="submit">
+        {{ editingId ? 'Update Pokémon' : 'Save Pokémon' }}
       </button>
-    </li>
-  } @empty {
-    <li>No Pokémon saved yet.</li>
-  }
-</ul>
+
+      @if (editingId) {
+        <button
+          class="cancel-button"
+          type="button"
+          (click)="cancelEdit()">
+          Cancel
+        </button>
+      }
+
+      @if (message) {
+        <p role="status">{{ message }}</p>
+      }
+    </div>
+  </form>
+
+  <h2 class="section-title">Saved Pokémon</h2>
+
+  <div class="pokemon-list">
+    @for (pokemon of pokemonService.pokemonList(); track pokemon._id) {
+      <div class="pokemon-card">
+        <p>
+          <strong>{{ pokemon.name }}</strong>
+          (Type: {{ pokemon.type }},
+          Level: {{ pokemon.level }},
+          Nature: {{ pokemon.nature }})
+        </p>
+
+        <div class="card-actions">
+          <button
+            class="edit-button"
+            type="button"
+            (click)="editPokemon(pokemon)">
+            Edit
+          </button>
+
+          <button
+            class="delete-button"
+            type="button"
+            (click)="deletePokemon(pokemon._id)">
+            Delete
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <p>No saved Pokémon yet.</p>
+    }
+  </div>
+
+</div>
